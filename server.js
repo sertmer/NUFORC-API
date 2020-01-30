@@ -37,10 +37,27 @@ app.get('/api/v1/locations/:id', async (req, res) => {
   }
 })
 
-app.get('/api/v1/encounters', async (req, res) => {
+app.post('/api/v1/locations', async (req, res) => {
+  const location = req.body;
+
+  for (let requiredParameter of ['city', 'state']) {
+    if (!location[requiredParameter]) {
+      return res.status(422).send({error: `expected format: { city: <string>, state: <string> }. You're missing the ${requiredParameter} property`})
+    }
+  }
+
   try {
-    const encounters = await database('encounters').select();
-    res.status(200).json(encounters)
+    const id = await database('locations').insert(location, 'id')
+    res.status(201).json(id[0])
+  } catch(error) {
+    res.status(500).json({ error })
+  }
+})
+
+app.get('/api/v1/locations', async (req, res) => {
+  try {
+    const locations = await database('locations').select();
+    res.status(200).json(locations)
   } catch(error) {
     res.status(500).json({ error })
   }
@@ -62,7 +79,6 @@ app.get('/api/v1/encounters/:id', async (req, res) => {
 })
 
 app.post('/api/v1/encounters', async (req, res) => {
-  const id = Date.now();
   const encounter = req.body;
 
   for (let requiredParameter of ['description', 'shape', 'duration', 'report_link', 'date_time', 'date_posted', 'location_id']) {
