@@ -52,4 +52,4 @@ A location is returned as an array with a Location object. The object has these 
 | Get specific location |`/api/v1/locations/:id`| GET | N/A | Single Location `[{}]` |
 | Get all encounters |`/api/v1/encounters`| GET | N/A | All encounters on the server: `[{}, {}, ...]` |
 | Get specific encounter |`/api/v1/encounters/:id`| GET | N/A | Single Encounter `[{}]` |
-| Post new encounter |`/api/v1/encounters/`| POST | {description: <string>, shape: <string>, duration: <string>, report_link: <string>, date_time: <string>, date_posted: <string>, location_id: <integer>}| id: 139 |
+| Post new encounter |`/api/v1/encounters/`| POST | `{description: <string>, shape: <string>, duration: <string>, report_link: <string>, date_time: <string>, date_posted: <string>, location_id: <integer>}`| id: 139 |
