@@ -10,13 +10,14 @@ The server will run on `http://localhost:3000`. All endpoints are prefixed with 
 
 ## Data Model
 
-An Encounter object has the following properties:
+An Encounter is returned as an array with an encounter object. The object has these properties: `id`, `description`, `shape`, `duration`, `report_link`, `date_time`, `date_posted`, `location_id`, `created_at`, and `updated_at`.
+
 
 ```js
 [
     {
         "id": 139,
-        "description": "West side of Cincinnati-close to airport 10-11pm-Did anyone else see these? I saw one or the same thing that moved on the west side of (downtown Cincy)town. Round with bright white light that would go \"around\" then I saw \"search light type\" light up into the sky in mulitiple directions. Had other colors in sporadic patterns light up.Stayed in place for about 1/2 hour then disappeared. I went to another vantage point and saw it again doing the same actions. Later it was to the north of Cincy.  Did anyone else see this? Would have been so close to the airport, but it didn't move in any pattern it just hovered very high up within plane paths I think. I have seen these before but I never wrote about them. Am I crazy?",
+        "description": "WOW, saw some serious alien activity the other day",
         "shape": "circle",
         "duration": "1/2 hour",
         "report_link": "http://www.nuforc.org/webreports/050/S50571.html",
@@ -29,10 +30,26 @@ An Encounter object has the following properties:
 ]
 ```
 
+A location is returned as an array with a Location object. The object has these properties: `id`, `city`, `state`, `created_at`, and `updated_at`.
+
+```js
+[
+    {
+        "id": 28679,
+        "city": "Cincinnati",
+        "state": "OH",
+        "created_at": "2020-01-30T16:39:30.103Z",
+        "updated_at": "2020-01-30T16:39:30.103Z"
+    }
+]
+```
+
 ## Endpoints
 
 | Purpose | URL | Verb | Request Body | Sample Success Response |
 |----|----|----|----|----|
-| Get all orders |`/api/v1/orders`| GET | N/A | All orders on the server: `{orders: [{}, {}, ...]}` |
-| Add new order |`/api/v1/orders`| POST | `{name: <String>, ingredients: <Array of Strings>}` | New order that was added: `{id: 2, name: "Alex", ingredients: ["cheese", "beans"]}` |
-| Delete existing order |`/api/v1/orders/:order_id`| DELETE | N/A | For successful deletion: No response body (only 204 status code) |
+| Get all locations |`/api/v1/locations`| GET | N/A | All locations on the server: `[{}, {}, ...]` |
+| Get specific location |`/api/v1/locations/:id`| GET | N/A | Single Location `[{}]` |
+| Get all encounters |`/api/v1/encounters`| GET | N/A | All encounters on the server: `[{}, {}, ...]` |
+| Get specific encounter |`/api/v1/encounters/:id`| GET | N/A | Single Encounter `[{}]` |
+
