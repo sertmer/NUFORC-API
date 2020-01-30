@@ -17,7 +17,7 @@ An Encounter is returned as an array with an encounter object. The object has th
 [
     {
         "id": 139,
-        "description": "WOW, saw some serious alien activity the other day",
+        "description": "WOW, saw some serious alien activity the other day, in Cincinnati",
         "shape": "circle",
         "duration": "1/2 hour",
         "report_link": "http://www.nuforc.org/webreports/050/S50571.html",
