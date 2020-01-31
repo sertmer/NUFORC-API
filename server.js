@@ -63,10 +63,10 @@ app.post('/api/v1/locations', async (req, res) => {
   }
 })
 
-app.get('/api/v1/locations', async (req, res) => {
+app.get('/api/v1/encounters', async (req, res) => {
   try {
-    const locations = await database('locations').select();
-    res.status(200).json(locations)
+    const encounters = await database('encounters').select();
+    res.status(200).json(encounters)
   } catch(error) {
     res.status(500).json({ error })
   }
