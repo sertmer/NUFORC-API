@@ -24,7 +24,9 @@ app.get('/api/v1/locations', async (req, res) => {
 
 app.get('/api/v1/locations/:id', async (req, res) => {
   try {
-    const location = await database('locations').where('id', req.params.id).select();
+    const location = await database('locations')
+      .where('id', req.params.id)
+      .select();
     if (location.length) {
       res.status(200).json(location)
     } else {
@@ -42,7 +44,14 @@ app.post('/api/v1/locations', async (req, res) => {
 
   for (let requiredParameter of ['city', 'state']) {
     if (!location[requiredParameter]) {
-      return res.status(422).send({error: `expected format: { city: <string>, state: <string> }. You're missing the ${requiredParameter} property`})
+      return res.status(422).send(
+        {
+          error: `expected format: {
+             city: <string>, state: <string> 
+            }
+            . You're missing the ${requiredParameter} property`
+        }
+      )
     }
   }
 
@@ -65,7 +74,9 @@ app.get('/api/v1/locations', async (req, res) => {
 
 app.get('/api/v1/encounters/:id', async (req, res) => {
   try {
-    const encounter = await database('encounters').where('id', req.params.id).select();
+    const encounter = await database('encounters')
+    .where('id', req.params.id)
+    .select();
     if (encounter.length) {
       res.status(200).json(encounter)
     } else {
@@ -81,9 +92,29 @@ app.get('/api/v1/encounters/:id', async (req, res) => {
 app.post('/api/v1/encounters', async (req, res) => {
   const encounter = req.body;
 
-  for (let requiredParameter of ['description', 'shape', 'duration', 'report_link', 'date_time', 'date_posted', 'location_id']) {
+  for (let requiredParameter of [
+      'description',
+      'shape',
+      'duration',
+      'report_link',
+      'date_time',
+      'date_posted',
+      'location_id'
+    ]
+  ) {
     if (!encounter[requiredParameter]) {
-      return res.status(422).send({error: `expected format: {description: <string>, shape: <string>, duration: <string>, report_link: <string>, date_time: <string>, date_posted: <string>, location_id: <integer>}. You're missing the ${requiredParameter} property`})
+      return res.status(422).send({
+          error: `expected format: {
+            description: <string>, 
+            shape: <string>, 
+            duration: <string>, 
+            report_link: <string>, 
+            date_time: <string>, 
+            date_posted: <string>, 
+            location_id: <integer>
+          }. You're missing the ${requiredParameter} property`
+        }
+      )
     }
   }
 
@@ -95,6 +126,23 @@ app.post('/api/v1/encounters', async (req, res) => {
   }
 })
 
+app.delete('/api/v1/encounters/:id', async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    res.status(422).send({ error: 'Missing id in the url' })
+  }
+
+  try {
+    await database('encounters').where('id', id).del()
+    res.status(204).send()
+  } catch(error) {
+    res.status(500).json({ error })
+  }
+})
+
 app.listen(app.get('port'), () => {
-  console.log(`${app.locals.title} is running on http://localhost:${app.get('port')}.`);
+  console.log(
+    `${app.locals.title} is running on http://localhost:${app.get('port')}.`
+    );
 });
